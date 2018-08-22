@@ -12,24 +12,24 @@ var spotify = new Spotify(keys.spotify);
 
 
 var action = process.argv[2];
-var term = process.argv[3];
+var term = process.argv.splice(3).join(" ");
 
 switch (action) {
     case "concert-this":
-        concert();
+        concert(term);
         break;
     case "spotify-this-song":
-        spotifySong();
+        spotifySong(term);
         break;
     case "movie-this":
-        movie();
+        movie(term);
         break;
     case "do-what-it-says":
         doWhatItSays();
         break;
 }
 
-function concert() {
+function concert(term) {
 
     if (!term) {
         term = "bush";
@@ -40,7 +40,7 @@ function concert() {
         if (!err && response.statusCode === 200) {
 
             var jsonData = JSON.parse(body);
-            //console.log(JSON.parse(body, null, 2));
+            console.log(JSON.parse(body, null, 2));
 
             var logConcert =
                 chalk.bold.red("\nName of the venue: ") + jsonData[0].venue.name +
@@ -54,7 +54,7 @@ function concert() {
 
 }
 
-function spotifySong() {
+function spotifySong(term) {
 
     if (!term) {
         term = "The Sign Ace Of Base";
@@ -80,7 +80,7 @@ function spotifySong() {
         });
 }
 
-function movie() {
+function movie(term) {
 
     if (!term) {
         term = "Mr. Nobody";
