@@ -116,22 +116,24 @@ function movie() {
 
 function doWhatItSays() {
 
-    fs.writeFile(
+    fs.readFile(
         "random.txt",
-        term,
-        function (err) {
+        "utf8",
+        function (err, data) {
             if (err) {
-                console.log(err);
+                return console.log(err);
             }
-            console.log("random.txt was updated");
-        }
-    )
-    // Using the fs Node package, LIRI will take the text inside of random.txt and then use it to call one of LIRI's commands.
-
-    // It should run spotify - this - song for "I Want it That Way," as follows the text in random.txt.
-
-    // Feel free to change the text in that document to test out the feature for other commands.
-
+            var result = data.split(",");
+            if (result[0] == "spotify-this-song") {
+                spotifySong(result[1]);
+            }
+            if (result[0] == "concert-this") {
+                concert(result[1]);
+            }
+            if (result[0] == "movie-this") {
+                movie(result[1]);
+            }
+        });
 }
 
 
